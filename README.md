@@ -1,6 +1,16 @@
 # Proxmox Homelab - Enterprise Security Lab 
 
 
+## Table of Contents
+1. [Overview / Purpose](#overview--purpose)
+2. [Key Skills Demonstrated](#key-skills-demonstrated)
+3. [Lab Environment](#lab-environment)
+  - [VM List](#vm-list)
+4. [Project Setup and Configuration](#project-setup--configuration)
+5. [Testing and Results](#testing--results)
+6. [Conclusion](#conclusion)
+
+
 ## Overview / Purpose
 This project is a fully virtualized enterprise security lab built on proxmox to replicate a real-world corporate environment. It combines **system administration, network security, adversarial testing, and SIEM implementation** to simulate both attacker and defender perspectives.
 
@@ -56,3 +66,8 @@ This homelab is built on a **Proxmox VE 8.4.11** hypervisor running on a host wi
 | Wazuh-SIEM       | Ubuntu Server 22.04 / SIEM          | 4GB | 2     | Centralized log aggregation, alerting, dashboards via Wazuh & ELK stack |
 
 
+## Project Setup and Configuration
+
+## Testing and Results
+
+## Conclusion
