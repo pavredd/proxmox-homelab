@@ -10,6 +10,7 @@ The goal of this lab was to design, deploy, and secure a small enterprise networ
 ## Key Skills Demonstrated
 1. **Virtualization and Networking**
    - Proxmox VM provisioning.
+   - Snapshot management.
    - Network segmentation (WAN/LAN interface seperation).
    - NAT and firewall rules.
 2. **Firewall and Intrusion Prevention System / Intrusion Detection System**
@@ -33,12 +34,25 @@ The goal of this lab was to design, deploy, and secure a small enterprise networ
    - Detection-to-response workflow simulation (attack -> detection -> investigation).
    - Practical SOC analyst skills including correlation and incident documentation.
 
+## Lab Environment
+This homelab is built on a **Proxmox VE 8.4.11** hypervisor running on a host with:
+1. **Host Hardware:** 16 vCPUs, 32 GB RAM.
+2. **Networking:**
+   - pfsense provides WAN and LAN segmentation.
+   - WAN interface connected to external network (internet).
+   - LAN interface hosts internal lab environment (AD, endpoints, and SIEM).
+3. **Virtual Machines:** 4 VMs (see [VM List](#vm-list))
+4. **Security Stack:**
+   - pfsense with Suricata IPS/IDS
+   - Wazuh SIEM on Ubuntu Server for centralized log collection, monitoring and dashboards.
 
 ### VM List
-| VM Name           | OS / Role                   | RAM | vCPUs | Purpose                                 |
-|------------------|----------------------------|-----|-------|-----------------------------------------|
-| pfSense           | FreeBSD / Firewall         | 4GB | 2   | WAN/LAN routing, IPS/IDS                |
-| AD-Server2022     | Windows Server 2022 / Domain Controller   | 6GB | 2   | Domain Controller, AD services          |
-| Win11-Enterprise  | Windows 11 Enterprise      | 6GB | 2   | Endpoint testing                        |
-| Kali-Linux        | Debian / Penetration       | 4GB | 2   | Attack simulations (nmap, hydra, etc.)  |
-| Wazuh-SIEM        | Ubuntu Server 22.04        | 4GB | 2   | SIEM, log aggregation, dashboard        |
+| VM Name          | OS / Role                          | RAM | vCPUs | Purpose                                                                 |
+|------------------|-------------------------------------|-----|-------|-------------------------------------------------------------------------|
+| pfSense          | FreeBSD / Firewall & Router         | 4GB | 2     | WAN/LAN segmentation, firewall rules, Suricata IPS/IDS                  |
+| AD-Server2022    | Windows Server 2022 / Domain Controller | 6GB | 2 | Domain Controller, Active Directory, Group Policy management            |
+| Win11-ENT1       | Windows 11 Enterprise Workstation   | 6GB | 2     | Domain-joined endpoint for user/GPO testing, Windows event logging      |
+| Kali-Linux       | Debian / Penetration Testing        | 4GB | 2     | Attack simulations (nmap, hydra, SMB enumeration, ICMP flood)           |
+| Wazuh-SIEM       | Ubuntu Server 22.04 / SIEM          | 4GB | 2     | Centralized log aggregation, alerting, dashboards via Wazuh & ELK stack |
+
+
