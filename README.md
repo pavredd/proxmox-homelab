@@ -5,7 +5,7 @@
 1. [Overview / Purpose](#overview--purpose)
 2. [Key Skills Demonstrated](#key-skills-demonstrated)
 3. [Lab Environment](#lab-environment)
-  - [VM List](#vm-list)
+     - [VM List](#vm-list)
 4. [Project Setup and Configuration](#project-setup--configuration)
 5. [Testing and Results](#testing--results)
 6. [Conclusion](#conclusion)
