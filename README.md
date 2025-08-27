@@ -6,8 +6,8 @@
 2. [Key Skills Demonstrated](#key-skills-demonstrated)
 3. [Lab Environment](#lab-environment)
      - [VM List](#vm-list)
-4. [Project Setup and Configuration](#project-setup--configuration)
-5. [Testing and Results](#testing--results)
+4. [Project Setup and Configuration](#project-setup-and-configuration)
+5. [Testing and Results](#testing-and-results)
 6. [Conclusion](#conclusion)
 
 
