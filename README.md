@@ -75,19 +75,20 @@ This homelab is built on a **Proxmox VE 8.4.11** hypervisor running on a host wi
    - `vmbr0` (WAN bridge) - connected to physical uplink for internet access.
    - `vmbr1` (LAN bridge) - isolated internal network for domain, endpoints, attacker, and SIEM.
 5. **Management:** Proxmox web UI accessible at `https://<management_interface_IP>:8006`. Host configured with lab-only FQDN `pve.lab` (appears as node `pve` in the UI).
-<br>
-<br>
+
+
 <p align="center">
-  <img src="images/proxmox-vm-list.png" alt="Proxmox VM List" width="300"/>
+  <img src="images/proxmox-vm-list.png" alt="Proxmox VM List" width="400"/>
 </p>
+
 *Proxmox VM Inventory*
-<br>
+<br><br>
 <p align="center">
-  <img src="images/proxmox-network-bridges.png" alt="Proxmox Network Bridges" width="500"/>
+  <img src="images/proxmox-network-bridges.png" alt="Proxmox Network Bridges" width="400"/>
 </p>
+
 *Proxmox Network Interface and Bridges*
-<br>
-<br>
+
 
 ## Testing and Results
 
