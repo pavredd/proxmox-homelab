@@ -92,7 +92,41 @@ This homelab is built on a **Proxmox VE 8.4.11** hypervisor running on a host wi
 
 ### pfsense Firewall and Suricata IPS/IDS
 1. **pfsense Configuration:**
+   - **Management** - pfsense web UI accessible at `https://<LAN_interface_IP>` for configuration and monitoring.
+   - **WAN Interface** -  configured with static / private IP for controlled internet acces. IPv6 disabled.
+   - **LAN Interface** - configured with static IP to serve the internal lab network for AD, endpoints, and SIEM.
+   - **Firewall Rules Setup:**
+     - **WAN Rules**
+       - Block private networks {RFC1918) from WAN.
+       - Block bogon networks.
+     - **LAN rules**
+       - Anti-Lockout Rule - ensures admin access to pfsense is never blocked.
+       - Default Allow LAN to Any - permits lab VM communications within LAN and outbound traffic.
+   - **NAT configuration**:
+     - **Port forwarding** - RDP (TCP 3389) forwarded to AD-Server2022 and win11-ENT1 to test external attack scenarios.
+     - **Temporary testing** - NAT reflection and Outbound NAT enabled for internal testing and reverted afterward.  
 2. **Suricata Setup:**
+   - **Mode Configuration:**
+     - **WAN Interface** - Inline mode with block offenders enabled to actively drop malicious traffic.
+     - **LAN Interface** - Alert-only mode for monitoring internal network traffic without blocking.
+   - **Rule Categories Enabled:**
+     - ET SCAN
+     - ET ATTACK_RESPONSE
+     - ET EXPLOIT
+     - ET MALWARE
+     - ET SHELLCODE
+     - ET DOS
+     - ET BOTCC
+     - ET WORM
+   - **Rule Action Customization:**
+     - Modified selected ET rules to `drop`, ensuring traffic that matched these signatures was both alerted and blocked.
+     - **Custom Rules:**
+       - Local RDP Brute Force Attempt rule - created to detect and block unauthorized RDP login attempts.
+       - Local ICMP Flood Detection rule - created for ICMP flood testing. However, detections were ultimately handled by the existing GPL SCAN Nmap Ping rule in the ET SCAN category, demonstrating Suricata’s rule precedence.
+     - **Logging** - enabled Eve JSON Logging to capture all alerts and drops in `eve.json`. Logs were accessible through both the pfSense web UI and console for review.
+    
+
+### Active Directory Domain Services
 
 ## Testing and Results
 
