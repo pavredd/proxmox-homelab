@@ -51,7 +51,7 @@ This homelab is built on a **Proxmox VE 8.4.11** hypervisor running on a host wi
    - pfsense provides WAN and LAN segmentation.
    - WAN interface connected to external network (internet).
    - LAN interface hosts internal lab environment (AD, endpoints, and SIEM).
-3. **Virtual Machines:** 4 VMs (see [VM List](#vm-list))
+3. **Virtual Machines:** 5 VMs (see [VM List](#vm-list))
 4. **Security Stack:**
    - pfsense with Suricata IPS/IDS
    - Wazuh SIEM on Ubuntu Server for centralized log collection, monitoring and dashboards.
@@ -67,6 +67,14 @@ This homelab is built on a **Proxmox VE 8.4.11** hypervisor running on a host wi
 
 
 ## Project Setup and Configuration
+### Proxmox Host
+1. **Version:** Proxmox VE 8.4.11
+2. **Resources:** 16 vCPUs, 32 GB RAM, 1 TB SSD storage.
+3. **VM Allocation:** 5 VMs with dedicated CPU, RAM, and thin provisioned storage for realistic enterprise simulation.
+4. **Networking:**
+   - `vmbr0` (WAN bridge) - connected to physical uplink for internet access.
+   - `vmbr1` (LAN bridge) - isolated internal network for domain, endpoints, attacker, and SIEM.
+5. **Management:** Proxmox web UI accessible at `https://<management_interface_IP>:8006`. Host configured with lab-only FQDN `pve.lab` (appears as node `pve` in the UI).
 
 ## Testing and Results
 
