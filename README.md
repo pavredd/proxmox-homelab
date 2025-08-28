@@ -77,18 +77,22 @@ This homelab is built on a **Proxmox VE 8.4.11** hypervisor running on a host wi
 5. **Management:** Proxmox web UI accessible at `https://<management_interface_IP>:8006`. Host configured with lab-only FQDN `pve.lab` (appears as node `pve` in the UI).
 
 
+<br>
 <p align="center">
-  <img src="images/proxmox-vm-list.png" alt="Proxmox VM List" width="400"/>
+  <img src="images/proxmox-vm-list.png" alt="Proxmox VM List" width="400"/><br>
+  <em>Proxmox VM Inventory</em>
 </p>
-
-*Proxmox VM Inventory*
-<br><br>
+<br>
 <p align="center">
-  <img src="images/proxmox-network-bridges.png" alt="Proxmox Network Bridges" width="400"/>
+  <img src="images/proxmox-network-bridges.png" alt="Proxmox Network Bridges" width="400"/><br>
+  <em>Proxmox Network Interface and Bridges</em>
 </p>
+<br>
 
-*Proxmox Network Interface and Bridges*
 
+### pfsense Firewall and Suricata IPS/IDS
+1. **pfsense Configuration:**
+2. **Suricata Setup:**
 
 ## Testing and Results
 
