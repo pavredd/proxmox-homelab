@@ -28,8 +28,8 @@ The goal of this lab was to design, deploy, and secure a small enterprise networ
    - Suricata IPS/IDS (inline block and alert modes).
    - Rule tuning.
 3. **Enterprise Windows Administration**
-   - Windows Server 2022 Active Directory Domain Services (reddy.lab).
-   - Organizational Units (OUs) and Group Policy Objects (GPOs) for LabUsers, Workstations, and domain-wide security policies.
+   - Windows Server 2022 Active Directory Domain Services (domain - `reddy.lab`).
+   - Organizational Units (OUs) and Group Policy Objects (GPOs) for `LabUsers`, `Workstations`, and domain-wide security policies.
    - Windows 11 domain join and policy enforcement testing.
 4. **Adversarial Simulation (Red Team Testing)**
    - Kali Linux attacks (Nmap scans, Hydra brute force, SMB enumeration, ICMP floods).
@@ -171,7 +171,72 @@ This homelab is built on a **Proxmox VE 8.4.11** hypervisor running on a host wi
 
 
 ### Wazuh SIEM (Ubuntu Server)
+1. **Server Setup:**  
+   - Deployed Wazuh SIEM on Ubuntu Server using the official installation script:  
+     ```bash
+     curl -sO https://packages.wazuh.com/4.12/wazuh-install.sh && sudo bash ./wazuh-install.sh -a -i
+     ```  
+   - Configured with a static LAN IP for consistent accessibility.  
+   - Web UI dashboard accessible via `https://<Ubuntu_Server_LAN_IP>:443`.
+2. **SIEM Configuration:**  
+   - Wazuh Manager installed as part of the deployment stack.  
+   - Centralized management of agent registration and monitoring through the Wazuh console. 
+3. **Agent Deployment:**  
+   - Wazuh Agents installed on Windows Server 2022 (AD-Server2022) and Windows 11 Enterprise (Win11-ENT1).  
+   - Extracted authentication keys from the wazuh manager and applied to each endpoint for secure enrollment and registration.
+4. **Log Forwarding & Visibility:**  
+   - Forwarded Windows Event Logs from both endpoints into Wazuh SIEM.  
+   - Security events validated and analyzed through the Threat Hunting module in the web UI.
+   - *(Note: pfSense/Suricata logs were not integrated in this deployment.)*
+
 
 ## Testing and Results
+1. **GPO Validation:**
+   - **Purpose:** Confirm that domain policies were correctly applied to users and endpoints.
+   - **Tests Performed:**
+     - **Authentication & Security** - logon/logoff auditing, account lockout enforcement after failed login attempts.
+     - **Access Restrictions** - checked that Control Panel, Task Manager, Registry Editor, CMD, and Windows Settings were blocked for `LabUsers` as per policy.
+     - **User Environment Policies:**
+       - Validated wallpaper enforcement.
+       - Confirmed file sharing and folder redirection - user Documents folder was redirected to the domain controller (`C:\Sharing\Redirects\<username>\Documents\`), and changes were synchronized.
+       - Verified shared drive mappings were accessible and consistent with policy.
+     - **System Updates** - Confirmed Windows Update configuration enforced (manual/notify).
+   - **Key Evidence:**
+     - Screenshot of Windows 11 endpoint showing applied wallpaper and restricted access to Task Manager.
+     - Screenshot of account lockout event in Wazuh SIEM.
+     - Screenshot of redirected Documents folder on the Windows Server 2022 showing user-specific files.
+     - Screenshot of mapped network drive confirming GPO enforcement.
+2. **WAN Adversarial Simulation:**
+   - **Purpose:** Validate the perimeter security configuration, including pfSense firewall and Suricata IPS (inline, block offenders mode on WAN).
+   - **Tests Performed:**
+     - **Network Scanning** - Nmap scans from Kali WAN interface to identify open ports and services. Three types of scans performed include:
+       - **SYN Scan**
+         ```bash
+         nmap -e eth0 -sS -Pn <WAN_IP>
+         ```
+       - **TCP Scan**
+         ```bash
+         nmap -e eth0 -sT -Pn <WAN_IP>
+         ```
+       - **UDP Scan**
+         ```bash
+         nmap -e eth0 -sU -Pn <WAN_IP>
+         ```
+     - **Brute Force Attacks** - Hydra used for RDP password brute force attempts targeting Win11-ENT1 via WAN.
+       ```bash
+       hydra -l <username>@reddy.lab -P /usr/share/wordlists/rockyou.txt rdp://<WAN_IP> -t 2
+       ```
+     - **ICMP Flood** - Simulated ping flood of 50 packets with a difference of 1ms between each packet using hping3 via WAN.
+       ```bash
+       hping3 -1 -c 50 -i u1000 <WAN_IP>
+       ```
+   - **Expected Behavior:**
+     - Suricata IPS should detect and block malicious traffic according to signatures.
+     - pfSense firewall should log and drop inbound traffic matching attack attempts.
+   - **Key Evidence:**
+     - Screenshot of Suricata eve.json showing “GPL SCAN Nmap ping” rule triggered.
+     - Screenshot of Wazuh Threat Hunting dashboard showing detected RDP and SMB brute force attempts.
+     - Screenshot of pfSense firewall logs showing baseline blocking rules (e.g., Block Private Networks) and note that attack-specific logs were captured primarily via Suricata IPS.
+
 
 ## Conclusion
