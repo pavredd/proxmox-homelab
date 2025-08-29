@@ -24,7 +24,7 @@ The goal of this lab was to design, deploy, and secure a small enterprise networ
    - Network segmentation (WAN/LAN interface seperation).
    - NAT and firewall rules.
 2. **Firewall and Intrusion Prevention System / Intrusion Detection System**
-   - pfsense firewall configuration.
+   - pfSense firewall configuration.
    - Suricata IPS/IDS (inline block and alert modes).
    - Rule tuning.
 3. **Enterprise Windows Administration**
@@ -33,7 +33,7 @@ The goal of this lab was to design, deploy, and secure a small enterprise networ
    - Windows 11 domain join and policy enforcement testing.
 4. **Adversarial Simulation (Red Team Testing)**
    - Kali Linux attacks (Nmap scans, Hydra brute force, SMB enumeration, ICMP floods).
-   - Validation of attacker activity in pfsense firewall logs, Suricata eve.json, Windows Event Viewer, and SIEM dashboard.
+   - Validation of attacker activity in pfSense firewall logs, Suricata eve.json, Windows Event Viewer, and SIEM dashboard.
 5. **Security Information and Event Management (SIEM)**
    - Wazuh deployment on Ubuntu Server.
    - Windows agents installation and enrollment.
@@ -48,12 +48,12 @@ The goal of this lab was to design, deploy, and secure a small enterprise networ
 This homelab is built on a **Proxmox VE 8.4.11** hypervisor running on a host with:
 1. **Host Hardware:** 16 vCPUs, 32 GB RAM.
 2. **Networking:**
-   - pfsense provides WAN and LAN segmentation.
+   - pfSense provides WAN and LAN segmentation.
    - WAN interface connected to external network (internet).
    - LAN interface hosts internal lab environment (AD, endpoints, and SIEM).
 3. **Virtual Machines:** 5 VMs (see [VM List](#vm-list))
 4. **Security Stack:**
-   - pfsense with Suricata IPS/IDS
+   - pfSense with Suricata IPS/IDS
    - Wazuh SIEM on Ubuntu Server for centralized log collection, monitoring and dashboards.
 
 ### VM List
@@ -90,9 +90,9 @@ This homelab is built on a **Proxmox VE 8.4.11** hypervisor running on a host wi
 <br>
 
 
-### pfsense Firewall and Suricata IPS/IDS
-1. **pfsense Configuration:**
-   - **Management** - pfsense web UI accessible at `https://<LAN_interface_IP>` for configuration and monitoring.
+### pfSense Firewall and Suricata IPS/IDS
+1. **pfSense Configuration:**
+   - **Management** - pfSense web UI accessible at `https://<LAN_interface_IP>` for configuration and monitoring.
    - **WAN Interface** -  configured with static / private IP for controlled internet acces. IPv6 disabled.
    - **LAN Interface** - configured with static IP to serve the internal lab network for AD, endpoints, and SIEM.
    - **Firewall Rules Setup:**
@@ -100,7 +100,7 @@ This homelab is built on a **Proxmox VE 8.4.11** hypervisor running on a host wi
        - Block private networks {RFC1918) from WAN.
        - Block bogon networks.
      - **LAN rules**
-       - Anti-Lockout Rule - ensures admin access to pfsense is never blocked.
+       - Anti-Lockout Rule - ensures admin access to pfSense is never blocked.
        - Default Allow LAN to Any - permits lab VM communications within LAN and outbound traffic.
    - **NAT configuration**:
      - **Port forwarding** - RDP (TCP 3389) forwarded to AD-Server2022 and win11-ENT1 to test external attack scenarios.
@@ -145,6 +145,34 @@ This homelab is built on a **Proxmox VE 8.4.11** hypervisor running on a host wi
 
 
 ### Windows 11 Enterprise (Endpoint)
+1. **Networking:** Configured with static IPv4 LAN IP for stable connectivity within the lab network.
+2. **Domain Membership:**
+   - Joined to the Active Directory domain `reddy.lab`.
+   - User account from the `LabUsers` OU was used to log in and validate domain authentication.
+3. **Testing Role:**
+   - Served as a controlled endpoint for validating GPO enforcement.
+   - Used as a target system for attack simulations from Kali Linux (RDP brute force, SMB brute force, ICMP flood) to validate firewall and IDS/IPS effectiveness.
+
+
+### Kali Linux (Attacker VM)
+1. **Networking:**  
+   - Configured with dual network interfaces for targeted attack scenarios:  
+     - **WAN Interface** – Static IP used for external attack simulations against the lab’s WAN Interface.  
+     - **LAN Interface** – Static IP used for internal attack simulations within the lab network.  
+   - Ensured correct interface usage by explicitly binding tools to interfaces (e.g., `-e eth1`) wherever applicable.  
+
+2. **Attack Toolset:**  
+   - **Nmap** – for network discovery and port scanning (SYN, TCP, and UDP).  
+   - **Hydra** – for brute force password attacks against RDP and SMB.  
+   - **SMBClient / Enum4linux** – for SMB enumeration and probing domain-related information.  
+   - **Hping3** – for simulating ICMP flood traffic.  
+
+3. **Testing Role:**  
+   - Served as the controlled attacker system for simulating both WAN-side and LAN-side adversarial activities.  
+   - Attack traffic was later validated through pfSense firewall logs, Suricata `eve.json` logs, and Wazuh SIEM.
+
+
+### Wazuh SIEM (Ubuntu Server)
 
 ## Testing and Results
 
