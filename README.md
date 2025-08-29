@@ -151,7 +151,7 @@ This homelab is built on a **Proxmox VE 8.4.11** hypervisor running on a host wi
    - User account from the `LabUsers` OU was used to log in and validate domain authentication.
 3. **Testing Role:**
    - Served as a controlled endpoint for validating GPO enforcement.
-   - Used as a target system for attack simulations from Kali Linux (RDP brute force, SMB brute force, ICMP flood) to validate firewall and IDS/IPS effectiveness.
+   - Used as a target system for attack simulations from Kali Linux (RDP brute force, SMB enumeration, ICMP flood) to validate firewall and IDS/IPS effectiveness.
 
 
 ### Kali Linux (Attacker VM)
@@ -162,8 +162,8 @@ This homelab is built on a **Proxmox VE 8.4.11** hypervisor running on a host wi
    - Ensured correct interface usage by explicitly binding tools to interfaces (e.g., `-e eth1`) wherever applicable. 
 2. **Attack Toolset:**
    - **Nmap** – for network discovery and port scanning (SYN, TCP, and UDP).
-   - **Hydra** – for brute force password attacks against RDP and SMB.
-   - **SMBClient / Enum4linux** – for SMB enumeration and probing domain-related information.
+   - **Hydra** – for brute force password attacks against RDP.
+   - **SMBClient / Enum4linux** – for SMB enumeration, SMB authentication test, and probing domain-related information.
    - **Hping3** – for simulating ICMP flood traffic.
 3. **Testing Role:**
    - Served as the controlled attacker system for simulating both WAN-side and LAN-side adversarial activities.
@@ -222,7 +222,7 @@ This homelab is built on a **Proxmox VE 8.4.11** hypervisor running on a host wi
          ```bash
          nmap -e eth0 -sU -Pn <WAN_IP>
          ```
-     - **Brute Force Attacks** - Hydra used for RDP password brute force attempts targeting Win11-ENT1 via WAN.
+     - **Brute Force Attack** - Hydra used for RDP password brute force attempts targeting Win11-ENT1 via WAN.
        ```bash
        hydra -l <username>@reddy.lab -P /usr/share/wordlists/rockyou.txt rdp://<WAN_IP> -t 2
        ```
@@ -230,13 +230,42 @@ This homelab is built on a **Proxmox VE 8.4.11** hypervisor running on a host wi
        ```bash
        hping3 -1 -c 50 -i u1000 <WAN_IP>
        ```
+     - **Service Enumeration** – `enum4linux` used to attempt SMB enumeration against exposed services.
+       ```bash
+       enum4linux -a <WAN_IP>
+       ```
    - **Expected Behavior:**
      - Suricata IPS should detect and block malicious traffic according to signatures.
      - pfSense firewall should log and drop inbound traffic matching attack attempts.
    - **Key Evidence:**
      - Screenshot of Suricata eve.json showing “GPL SCAN Nmap ping” rule triggered.
-     - Screenshot of Wazuh Threat Hunting dashboard showing detected RDP and SMB brute force attempts.
+     - Screenshot of Wazuh Threat Hunting dashboard showing detected RDP brute force attempts.
      - Screenshot of pfSense firewall logs showing baseline blocking rules (e.g., Block Private Networks) and note that attack-specific logs were captured primarily via Suricata IPS.
+3. **LAN Adversarial Simulation:**
+   - **Purpose:** Validate internal security visibility and monitoring by simulating adversarial activity originating within the LAN. Due to the flat LAN topology (all endpoints on the same subnet), Suricata on pfSense could not observe intra-LAN traffic directly. Therefore, testing focused on endpoint log visibility, authentication events, and brute-force detection.
+   - **Tests Performed:**
+     - **Brute Force Attacks** - Hydra used for RDP password brute force attempts targeting Win11-ENT1 via LAN.
+       ```bash
+       hydra -l <username>@reddy.lab -P /usr/share/wordlists/rockyou.txt rdp://<LAN_IP> -t 2
+       ```
+     - **SMB Authentication Test** - Attempted SMB enumeration using `smbclient` with incorrect credentials to generate failed login events.
+       ```bash
+       smbclient -L //<LAN_IP> -U <username>@reddy.lab
+       ```
+     - **ICMP Flood** - Simulated ping flood of 50 packets with a difference of 1ms between each packet using hping3 via LAN.
+       ```bash
+       hping3 -1 -c 50 -i u1000 <LAN_IP>
+       ```
+   - **Expected Behavior:**
+     - Windows Event Logs should capture authentication failures and account lockouts..
+     - Wazuh SIEM should aggregate endpoint logs and highlight failed login attempts and policy enforcement events.
+   - **Key Evidence:**
+     - Screenshot of failed login attempts in Wazuh SIEM showing source IP from Kali LAN interface.
+     - Screenshot of domain user account lockout events in Wazuh SIEM.
+4. **Summary of Findings:**
+   - **GPO Enforcement:** Group Policies were applied successfully across endpoints. Authentication auditing, account lockout thresholds, access restrictions, and user environment controls (wallpaper, shared drive mappings, and folder redirection) functioned as intended, ensuring centralized configuration management and policy enforcement.
+   - **WAN Security:** External adversarial activity—including Nmap scans, RDP brute force attempts, service enumeration, and ICMP floods—was detected and blocked by Suricata IPS in inline mode. pfSense firewall enforced baseline WAN restrictions, while Wazuh SIEM provided visibility of intrusion attempts.
+   - **LAN Security:** Due to the flat LAN topology, pfSense/Suricata could not directly inspect intra-LAN traffic. However, endpoint security logging captured authentication failures and account lockout events generated by simulated brute force and SMB login attempts. These events were successfully forwarded and correlated in Wazuh SIEM, demonstrating centralized visibility of insider activity.
 
 
 ## Conclusion
