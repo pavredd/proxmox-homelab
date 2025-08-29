@@ -269,3 +269,12 @@ This homelab is built on a **Proxmox VE 8.4.11** hypervisor running on a host wi
 
 
 ## Conclusion
+This lab demonstrated practical enterprise security skills by implementing a layered defense architecture:
+1. **Active Directory** GPOs enforced advanced audit policies, account lockouts, access restrictions, and user environment controls (wallpaper, folder redirection, shared drives), ensuring centralized policy management across endpoints.
+2. **pfSense Firewall & Suricata IPS** protected the perimeter, detecting and blocking WAN-based attacks such as Nmap scans, RDP brute force, ICMP floods, and SMB enumeration.
+3. **Windows Endpoints** captured detailed security events—including authentication failures, account lockouts, and advanced audit logs—providing visibility into internal activity.
+4. **Wazuh SIEM** centralized log collection, correlating events from endpoints and enabling efficient monitoring and analysis of both external and internal threats.
+While WAN-based attacks were actively detected and blocked, LAN-based activity was successfully detected and monitored despite the flat LAN topology.
+
+## Future Scope
+
