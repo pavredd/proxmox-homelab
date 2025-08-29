@@ -9,6 +9,7 @@
 4. [Project Setup and Configuration](#project-setup-and-configuration)
 5. [Testing and Results](#testing-and-results)
 6. [Conclusion](#conclusion)
+7. [Future Scope](#future-scope)
 
 
 ## Overview / Purpose
