@@ -126,7 +126,25 @@ This homelab is built on a **Proxmox VE 8.4.11** hypervisor running on a host wi
      - **Logging** - enabled Eve JSON Logging to capture all alerts and drops in `eve.json`. Logs were accessible through both the pfSense web UI and console for review.
     
 
-### Active Directory Domain Services
+### Windows Server 2022
+1. **Server Role:**
+   - Installed Active Directory Domain Services (AD DS) role on Windows Server 2022 (AD-Server2022)
+   - Promoted server to Domain Controller and created a new forest `reddy.lab`.
+2. **Networking:** Configured static IPv4 LAN IP for consistent domain communication.
+3. **Domain Configuration:**
+   - Established root domain `reddy.lab`.
+   - Created Organizational Units (OUs) `LabUsers` and `Workstations` for logical structure.
+4. **Group Policy Objectives:**
+   - Implemented baseline hardening and user environment controls, including:
+     - **Authentication & Security** – password complexity, account lockout policies.
+     - **Advanced Audit Policy Configuration** - logon events, object access, policy changes, privilege use, etc.
+     - **Access Restrictions** – disabled Control Panel, Task Manager, Registry Editor, Command Prompt, and Windows Settings.
+     - **User Environment** – enforced shared drive mapping, file sharing / folder redirection for centralized access, and applied corporate wallpaper.
+     - **System Updates** – configured Windows Update to manual (notify).
+   - 📄 [Full GPO Report (HTML)](docs/gpo-report.html)
+
+
+### Windows 11 Enterprise (Endpoint)
 
 ## Testing and Results
 
