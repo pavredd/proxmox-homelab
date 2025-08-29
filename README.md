@@ -155,20 +155,18 @@ This homelab is built on a **Proxmox VE 8.4.11** hypervisor running on a host wi
 
 
 ### Kali Linux (Attacker VM)
-1. **Networking:**  
-   - Configured with dual network interfaces for targeted attack scenarios:  
-     - **WAN Interface** – Static IP used for external attack simulations against the lab’s WAN Interface.  
-     - **LAN Interface** – Static IP used for internal attack simulations within the lab network.  
-   - Ensured correct interface usage by explicitly binding tools to interfaces (e.g., `-e eth1`) wherever applicable.  
-
-2. **Attack Toolset:**  
-   - **Nmap** – for network discovery and port scanning (SYN, TCP, and UDP).  
-   - **Hydra** – for brute force password attacks against RDP and SMB.  
-   - **SMBClient / Enum4linux** – for SMB enumeration and probing domain-related information.  
-   - **Hping3** – for simulating ICMP flood traffic.  
-
-3. **Testing Role:**  
-   - Served as the controlled attacker system for simulating both WAN-side and LAN-side adversarial activities.  
+1. **Networking:**
+   - Configured with dual network interfaces for targeted attack scenarios:
+     - **WAN Interface** - Static IP used for external attack simulations against the lab’s WAN Interface.
+     - **LAN Interface** - Static IP used for internal attack simulations within the lab network.
+   - Ensured correct interface usage by explicitly binding tools to interfaces (e.g., `-e eth1`) wherever applicable. 
+2. **Attack Toolset:**
+   - **Nmap** – for network discovery and port scanning (SYN, TCP, and UDP).
+   - **Hydra** – for brute force password attacks against RDP and SMB.
+   - **SMBClient / Enum4linux** – for SMB enumeration and probing domain-related information.
+   - **Hping3** – for simulating ICMP flood traffic.
+3. **Testing Role:**
+   - Served as the controlled attacker system for simulating both WAN-side and LAN-side adversarial activities.
    - Attack traffic was later validated through pfSense firewall logs, Suricata `eve.json` logs, and Wazuh SIEM.
 
 
