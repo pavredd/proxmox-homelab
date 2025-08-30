@@ -173,6 +173,29 @@ This homelab is built on a **Proxmox VE 8.4.11** hypervisor running on a host wi
    - 📄 [Full GPO Report (HTML)](docs/gpo-report.html)
 
 
+<br>
+<p align="center">
+  <img src="images/ad-organizational-units.png" alt="Active Directory Users and Computers OU's created." width="700"/><br>
+  <em>Active Directory Users and Computer, Organizational Units (LabUsers and Workstations) created.</em>
+</p>
+<br>
+<p align="center">
+  <img src="images/ad-labusers-gpos.png" alt="Active Directory GPOs linked to LabUsers" width="700"/><br>
+  <em>Group Policy Objects linked to LabUsers in reddy.lab domain.</em>
+</p>
+<br>
+<p align="center">
+  <img src="images/ad-shared-drive.png" alt="Screenshot of Windows 11 File Explorer displaying a shared drive mapped." width="700"/><br>
+  <em>Mapped network drive on Windows 11 endpoint showing GPO-enforced drive mapping and access to centralized folder.</em>
+</p>
+<br>
+<p align="center">
+  <img src="images/ad-folder-redirection.png" alt="Screenshot of server-side folder path (C:\Sharing\Redirects\pavan\Documents) displaying files added by the Windows 11 endpoint, demonstrating GPO folder redirection." width="700"/><br>
+  <em>Windows Server 2022 showing redirected Documents folder for user pavan, synchronized via Group Policy folder redirection.</em>
+</p>
+<br>
+
+
 ### Windows 11 Enterprise (Endpoint)
 1. **Networking:** Configured with static IPv4 LAN IP for stable connectivity within the lab network.
 2. **Domain Membership:**
