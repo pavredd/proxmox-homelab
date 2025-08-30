@@ -157,13 +157,14 @@ This homelab is built on a **Proxmox VE 8.4.11** hypervisor running on a host wi
 
 ### Windows Server 2022
 1. **Server Role:**
+   - **Device Name:** WIN-C74T9SJUQEH
    - Installed Active Directory Domain Services (AD DS) role on Windows Server 2022 (AD-Server2022)
    - Promoted server to Domain Controller and created a new forest `reddy.lab`.
-2. **Networking:** Configured static IPv4 LAN IP for consistent domain communication.
-3. **Domain Configuration:**
+3. **Networking:** Configured static IPv4 LAN IP for consistent domain communication.
+4. **Domain Configuration:**
    - Established root domain `reddy.lab`.
    - Created Organizational Units (OUs) `LabUsers` and `Workstations` for logical structure.
-4. **Group Policy Objectives:**
+5. **Group Policy Objectives:**
    - Implemented baseline hardening and user environment controls, including:
      - **Authentication & Security** – password complexity, account lockout policies.
      - **Advanced Audit Policy Configuration** - logon events, object access, policy changes, privilege use, etc.
