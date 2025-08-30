@@ -278,4 +278,21 @@ This lab demonstrated practical enterprise security skills by implementing a lay
 While WAN-based attacks were actively detected and blocked, LAN-based activity was successfully detected and monitored despite the flat LAN topology.
 
 ## Future Scope
+While the lab successfully demonstrated a layered defense approach, the following improvements would expand its capabilities and address current limitations:
+1. **Redesign Network Topology:**
+   - Redesign the current flat LAN topology so that intra-LAN traffic passes through the pfSense firewall.
+   - This would allow Suricata IPS to inspect LAN-to-LAN traffic, improving detection of lateral movement, internal scanning, and insider threats.
+2. **Log Centralization Enhancements:**
+   - Forward pfSense firewall and Suricata IPS logs directly into Wazuh SIEM to provide complete visibility of both perimeter and internal activity.
+   - Standardize log collection across all systems to improve correlation and reduce blind spots.
+3. **Automation & Response Orchestration:**
+   - Automate account lockout and alert workflows in Wazuh to trigger notifications (e.g., email) when brute force or anomaly events occur.
+   - Explore Security Orchestration, Automation, and Response (SOAR) integration to enable automated blocking of suspicious IPs, reducing response time.
+4. **Endpoint Hardening with XDR:**
+   - Extend endpoint protection beyond logging by leveraging Wazuh’s Extended Detection and Response (XDR) capabilities.
+5. **Vulnerability Management:**
+   - Integrate vulnerability scanning tools (e.g., Wazuh’s vulnerability detection module, OpenVAS, or Nessus) to identify missing patches and insecure configurations.
+   - Correlate vulnerability data with SIEM alerts to prioritize risks more effectively.
+
+These improvements would significantly enhance the lab’s security maturity, bringing it closer to enterprise-grade deployments and aligning it more closely with real-world defensive architectures.
 
