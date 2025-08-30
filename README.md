@@ -167,8 +167,8 @@ This homelab is built on a **Proxmox VE 8.4.11** hypervisor running on a host wi
    - Implemented baseline hardening and user environment controls, including:
      - **Authentication & Security** – password complexity, account lockout policies.
      - **Advanced Audit Policy Configuration** - logon events, object access, policy changes, privilege use, etc.
-     - **Access Restrictions** – disabled Control Panel, Task Manager, Registry Editor, Command Prompt, and Windows Settings.
-     - **User Environment** – enforced shared drive mapping, file sharing / folder redirection for centralized access, and applied corporate wallpaper.
+     - **Access Restrictions** – disabled Control Panel, Task Manager, Registry Editor, Command Prompt, removable storage, and Windows Settings.
+     - **User Environment** – enforced shared drive mapping, file sharing / folder redirection for centralized access, logon banner, and applied corporate wallpaper.
      - **System Updates** – configured Windows Update to manual (notify).
    - 📄 [Full GPO Report (HTML)](docs/gpo-report.html)
 
@@ -227,7 +227,7 @@ This homelab is built on a **Proxmox VE 8.4.11** hypervisor running on a host wi
      - **Access Restrictions** - checked that Control Panel, Task Manager, Registry Editor, CMD, and Windows Settings were blocked for `LabUsers` as per policy.
      - **User Environment Policies:**
        - Validated wallpaper enforcement.
-       - Confirmed file sharing and folder redirection - user Documents folder was redirected to the domain controller (`C:\Sharing\Redirects\<username>\Documents\`), and changes were synchronized.
+       - Confirmed file sharing and folder redirection - user Documents folder was redirected to the domain controller (`C:\Shares\Redirected\<username>\Documents\`), and changes were synchronized.
        - Verified shared drive mappings were accessible and consistent with policy.
      - **System Updates** - Confirmed Windows Update configuration enforced (manual/notify).
    - **Key Evidence:**
