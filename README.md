@@ -238,7 +238,7 @@ This homelab is built on a **Proxmox VE 8.4.11** hypervisor running on a host wi
 
 <br>
 <p align="center">
-  <img src="images/kali-network-interface.png" alt="Terminal output showing Kali Linux VM network configuration with WAN and LAN interfaces." width="900"/><br>
+  <img src="images/kali-network-interface.png" alt="Terminal output showing Kali Linux VM network configuration with WAN and LAN interfaces." width="800"/><br>
   <em>Kali Linux attacker VM configured with dual interfaces for WAN- and LAN-based attack simulations.</em>
 </p>
 <br>
@@ -262,6 +262,19 @@ This homelab is built on a **Proxmox VE 8.4.11** hypervisor running on a host wi
    - Forwarded Windows Event Logs from both endpoints into Wazuh SIEM.  
    - Security events validated and analyzed through the Threat Hunting module in the web UI.
    - *(Note: pfSense/Suricata logs were not integrated in this deployment.)*
+
+
+<br>
+<p align="center">
+  <img src="images/wazuh-manager.png" alt="Wazuh manager console listing all enrolled agents." width="500"/><br>
+  <em>Wazuh manager showing registered agents, including WIN-C74T9SJUQEH (AD-Server2022) and Win11-ENT1 (Windows 11 Enterprise).</em>
+</p>
+<br>
+<p align="center">
+  <img src="images/wazuh-dashboard.png" alt="Wazuh dashboard showing agent overview with AD-Server2022 and Win11-ENT1 listed as active agents." width="800"/><br>
+  <em>Wazuh web UI dashboard displaying active agents</em>
+</p>
+<br>
 
 
 ## Testing and Results
