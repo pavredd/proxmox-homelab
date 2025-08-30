@@ -206,6 +206,19 @@ This homelab is built on a **Proxmox VE 8.4.11** hypervisor running on a host wi
    - Used as a target system for attack simulations from Kali Linux (RDP brute force, SMB enumeration, ICMP flood) to validate firewall and IDS/IPS effectiveness.
 
 
+<br>
+<p align="center">
+  <img src="images/win11-domain-join.png" alt="System > About page showing Windows 11 Enterprise edition and domain membership." width="800"/><br>
+  <em>Windows 11 Enterprise endpoint joined to the reddy.lab Active Directory domain.</em>
+</p>
+<br>
+<p align="center">
+  <img src="images/win11-logon-banner.png" alt="Windows 11 logon screen displaying Group Policy–configured security banner." width="800"/><br>
+  <em>Domain-level workstation policy applying logon banner to Windows 11 endpoint.</em>
+</p>
+<br>
+
+
 ### Kali Linux (Attacker VM)
 1. **Networking:**
    - Configured with dual network interfaces for targeted attack scenarios:
