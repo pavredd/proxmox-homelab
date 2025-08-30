@@ -235,6 +235,14 @@ This homelab is built on a **Proxmox VE 8.4.11** hypervisor running on a host wi
    - Attack traffic was later validated through pfSense firewall logs, Suricata `eve.json` logs, and Wazuh SIEM.
 
 
+<br>
+<p align="center">
+  <img src="images/kali-network-interface.png" alt="Terminal output showing Kali Linux VM network configuration with WAN and LAN interfaces." width="900"/><br>
+  <em>Kali Linux attacker VM configured with dual interfaces for WAN- and LAN-based attack simulations.</em>
+</p>
+<br>
+
+
 ### Wazuh SIEM (Ubuntu Server)
 1. **Server Setup:**  
    - Deployed Wazuh SIEM on Ubuntu Server using the official installation script:  
