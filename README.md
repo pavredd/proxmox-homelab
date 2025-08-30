@@ -108,8 +108,8 @@ This homelab is built on a **Proxmox VE 8.4.11** hypervisor running on a host wi
      - **Temporary testing** - NAT reflection and Outbound NAT enabled for internal testing and reverted afterward.
 
 
- <br>
- <p align="center">
+<br>
+<p align="center">
   <img src="images/pfsense-web-ui.png" alt="pfSense Web UI Dashboard." width="900"/><br>
   <em>pfSense Web UI Dashboard showing WAN and LAN interfaces.</em>
 </p>
@@ -135,7 +135,25 @@ This homelab is built on a **Proxmox VE 8.4.11** hypervisor running on a host wi
        - Local RDP Brute Force Attempt rule - created to detect and block unauthorized RDP login attempts.
        - Local ICMP Flood Detection rule - created for ICMP flood testing. However, detections were ultimately handled by the existing GPL SCAN Nmap Ping rule in the ET SCAN category, demonstrating Suricata’s rule precedence.
      - **Logging** - enabled Eve JSON Logging to capture all alerts and drops in `eve.json`. Logs were accessible through both the pfSense web UI and console for review.
-    
+
+
+<br>
+<p align="center">
+  <img src="images/suricata-interfaces.png" alt="Suricata Interfaces (WAN and LAN) Configured." width="900"/><br>
+  <em>Suricata IPS/IDS interface showing WAN in inline block mode and LAN in default alert-only mode.</em>
+</p>
+<br>
+<p align="center">
+  <img src="images/suricata-custom-rules.png" alt="Suricata Custom Rules." width="900"/><br>
+  <em>Custom Suricata rules for detecting RDP brute force attempts and ICMP floods.</em>
+</p>
+<br>
+<p align="center">
+  <img src="images/suricata-eve-logs.png" alt="Suricata EVE Json Logs." width="900"/><br>
+  <em>Eve JSON logging output from Suricata.</em>
+</p>
+<br>
+
 
 ### Windows Server 2022
 1. **Server Role:**
