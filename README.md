@@ -105,7 +105,17 @@ This homelab is built on a **Proxmox VE 8.4.11** hypervisor running on a host wi
        - Default Allow LAN to Any - permits lab VM communications within LAN and outbound traffic.
    - **NAT configuration**:
      - **Port forwarding** - RDP (TCP 3389) forwarded to AD-Server2022 and win11-ENT1 to test external attack scenarios.
-     - **Temporary testing** - NAT reflection and Outbound NAT enabled for internal testing and reverted afterward.  
+     - **Temporary testing** - NAT reflection and Outbound NAT enabled for internal testing and reverted afterward.
+
+
+ <br>
+ <p align="center">
+  <img src="images/pfsense-web-ui.png" alt="pfSense Web UI Dashboard." width="900"/><br>
+  <em>pfSense Web UI Dashboard showing WAN and LAN interfaces.</em>
+</p>
+<br>
+
+
 2. **Suricata Setup:**
    - **Mode Configuration:**
      - **WAN Interface** - Inline mode with block offenders enabled to actively drop malicious traffic.
