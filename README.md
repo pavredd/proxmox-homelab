@@ -289,10 +289,26 @@ This homelab is built on a **Proxmox VE 8.4.11** hypervisor running on a host wi
        - Verified shared drive mappings were accessible and consistent with policy.
      - **System Updates** - Confirmed Windows Update configuration enforced (manual/notify).
    - **Key Evidence:**
-     - Screenshot of Windows 11 endpoint showing applied wallpaper and restricted access to Task Manager.
-     - Screenshot of account lockout event in Wazuh SIEM.
-     - Screenshot of redirected Documents folder on the Windows Server 2022 showing user-specific files.
-     - Screenshot of mapped network drive confirming GPO enforcement.
+
+
+<br>
+<p align="center">
+  <img src="images/gpo-wallpaper-task-manager.png" alt="Windows 11 endpoint with GPO-enforced wallpaper and blocked Task Manager access." width="800"/><br>
+  <em>Windows 11 endpoint showing GPO enforced wallpaper and restricted access to Task Manager for LabUsers.</em>
+</p>
+<br>
+<p align="center">
+  <img src="images/gpo-screen-account-lockout.png" alt="Windows 11 login screen showing account lockout message after repeated failed login attempts" width="800"/><br>
+  <em>Account lockout message on Windows 11 endpoint after multiple failed login attempts, confirming GPO enforcement.</em>
+</p>
+<br>
+<p align="center">
+  <img src="images/gpo-siem-account-lockout.png" alt="Screenshot of Wazuh SIEM showing Event ID 4740 account lockout for user pavan, originating from failed logons on a Windows 11 endpoint." width="800"/><br>
+  <em>Wazuh SIEM dashboard showing a domain user (pavan) account lockout event (Event ID 4740) generated from failed logons on the Windows 11 endpoint.</em>
+</p>
+<br>
+
+
 2. **WAN Adversarial Simulation:**
    - **Purpose:** Validate the perimeter security configuration, including pfSense firewall and Suricata IPS (inline, block offenders mode on WAN).
    - **Tests Performed:**
