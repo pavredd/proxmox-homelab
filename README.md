@@ -7,9 +7,15 @@
 3. [Lab Environment](#lab-environment)
      - [VM List](#vm-list)
 4. [Project Setup and Configuration](#project-setup-and-configuration)
-5. [Testing and Results](#testing-and-results)
-6. [Conclusion](#conclusion)
-7. [Future Scope](#future-scope)
+     - [Proxmox Host](#proxmox-host)
+     - [pfSense Firewall and Suricata IPS / IDS](#pfsense-firewall-and-suricata-ips--ids)
+     - [Windows Server 2022](#windows-server-2022)
+     - [Windows 11 Enterprise (Endpoint)](#windows-11-enterprise-endpoint)
+     - [Kali Linux (Attacker VM)](#kali-linux-attacker-vm)
+     - [Wazuh SIEM (Ubuntu Server)](#wazuh-siem-ubuntu-server)
+6. [Testing and Results](#testing-and-results)
+7. [Conclusion](#conclusion)
+8. [Future Scope](#future-scope)
 
 
 ## Overview / Purpose
@@ -91,7 +97,7 @@ This homelab is built on a **Proxmox VE 8.4.11** hypervisor running on a host wi
 <br>
 
 
-### pfSense Firewall and Suricata IPS/IDS
+### pfSense Firewall and Suricata IPS / IDS
 1. **pfSense Configuration:**
    - **Management** - pfSense web UI accessible at `https://<LAN_interface_IP>` for configuration and monitoring.
    - **WAN Interface** -  configured with static / private IP for controlled internet acces. IPv6 disabled.
@@ -382,8 +388,21 @@ This homelab is built on a **Proxmox VE 8.4.11** hypervisor running on a host wi
      - Windows Event Logs should capture authentication failures and account lockouts..
      - Wazuh SIEM should aggregate endpoint logs and highlight failed login attempts and policy enforcement events.
    - **Key Evidence:**
-     - Screenshot of failed login attempts in Wazuh SIEM showing source IP from Kali LAN interface.
-     - Screenshot of domain user account lockout events in Wazuh SIEM.
+
+
+<br>
+<p align="center">
+  <img src="images/lan-attack-pfirewall-icmp-logs.png" alt="Windows Defender firewall log showing ICMP packets from Kali Linux LAN IP dropped according to custom inbound blocking rule." width="800"/><br>
+  <em>Windows Defender firewall log confirming ICMP flood packets from Kali Linux LAN interface were blocked by custom firewall rule.</em>
+</p>
+<br>
+<p align="center">
+  <img src="images/lan-attack-siem-smb-logon-failure.png" alt="Wazuh SIEM log showing failed SMB authentication attempt from Kali Linux LAN IP against Windows 11 endpoint." width="800"/><br>
+  <em>Failed SMB enumeration attempt from Kali Linux LAN IP recorded as Event ID 4625 (Logon Type 3, Network Logon) in Wazuh SIEM, confirming unsuccessful authentication via smbclient.</em>
+</p>
+<br>
+
+
 4. **Summary of Findings:**
    - **GPO Enforcement:** Group Policies were applied successfully across endpoints. Authentication auditing, account lockout thresholds, access restrictions, and user environment controls (wallpaper, shared drive mappings, and folder redirection) functioned as intended, ensuring centralized configuration management and policy enforcement.
    - **WAN Security:** External adversarial activity—including Nmap scans, RDP brute force attempts, service enumeration, and ICMP floods—was detected and blocked by Suricata IPS in inline mode. pfSense firewall enforced baseline WAN restrictions, while Wazuh SIEM provided visibility of intrusion attempts.
