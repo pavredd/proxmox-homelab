@@ -177,7 +177,7 @@ This homelab is built on a **Proxmox VE 8.4.11** hypervisor running on a host wi
      - **Access Restrictions** – disabled Control Panel, Task Manager, Registry Editor, Command Prompt, removable storage, and Windows Settings.
      - **User Environment** – enforced shared drive mapping, file sharing / folder redirection for centralized access, logon banner, and applied corporate wallpaper.
      - **System Updates** – configured Windows Update to manual (notify).
-   - 📄 <a href="docs/gpo-report.html" target="_blank">Full GPO Report (HTML)</a>
+   - 📄 [Full GPO Report (HTML)](https://pavredd.github.io/proxmox-homelab/gpo-report.html)
 
 
 <br>
