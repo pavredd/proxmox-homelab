@@ -341,9 +341,28 @@ This homelab is built on a **Proxmox VE 8.4.11** hypervisor running on a host wi
      - Suricata IPS should detect and block malicious traffic according to signatures.
      - pfSense firewall should log and drop inbound traffic matching attack attempts.
    - **Key Evidence:**
-     - Screenshot of Suricata eve.json showing “GPL SCAN Nmap ping” rule triggered.
-     - Screenshot of Wazuh Threat Hunting dashboard showing detected RDP brute force attempts.
-     - Screenshot of pfSense firewall logs showing baseline blocking rules (e.g., Block Private Networks) and note that attack-specific logs were captured primarily via Suricata IPS.
+
+
+<br>
+<p align="center">
+  <img src="images/wan-attack-pfsense-blocked-firewall-logs.png" alt="Screenshot of Wazuh SIEM showing Event ID 4740 account lockout for user pavan, originating from failed logons on a Windows 11 endpoint." width="800"/><br>
+  <em>pfSense firewall log showing TCP traffic blocked on WAN interface by default rule Block private networks from WAN.</em>
+</p>
+<br>
+<p align="center">
+  <img src="images/wan-attack-nmap-syn-eve-logs-1.png" alt="Suricata eve: Nmap SYN (IPs)" width="800" /><br>
+  <img src="images/wan-attack-nmap-syn-eve-logs-2.png" alt="Suricata eve: Nmap SYN (Signature)" width="800" />
+</p>
+<p align="center"><em>Suricata eve.json logs showing Nmap SYN scan attempt blocked by signature ET SCAN NMAP -sS window 1024 (two views).</em></p>
+<br>
+<p align="center">
+  <img src="images/wan-attack-rdp-brute-force-eve-logs-1.png" alt="Suricata eve: RDP Brute Force (IPs)" width="800" /><br>
+  <img src="images/wan-attack-rdp-brute-force-eve-logs-2.png" alt="Suricata eve: RDP Brute Force (Signature)" width="800" />
+</p>
+<p align="center"><em>Suricata eve.json logs showing RDP brute force attempt blocked by custom rule Local RDP Brute Force Attempt (two views).</em></p>
+<br>
+
+
 3. **LAN Adversarial Simulation:**
    - **Purpose:** Validate internal security visibility and monitoring by simulating adversarial activity originating within the LAN. Due to the flat LAN topology (all endpoints on the same subnet), Suricata on pfSense could not observe intra-LAN traffic directly. Therefore, testing focused on endpoint log visibility, authentication events, and brute-force detection.
    - **Tests Performed:**
