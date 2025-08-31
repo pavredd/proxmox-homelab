@@ -19,7 +19,7 @@
 
 
 ## Overview / Purpose
-This project is a fully virtualized enterprise security lab built on proxmox to replicate a real-world corporate environment. It combines **system administration, network security, adversarial testing, and SIEM implementation** to simulate both attacker and defender perspectives.
+This project is a fully virtualized enterprise security lab built on proxmox to replicate a real-world corporate environment. It combines system administration, network security, adversarial testing, and SIEM implementation to simulate both attacker and defender perspectives.
 
 The goal of this lab was to design, deploy, and secure a small enterprise network while gaining hands-on experience with Active Directory administration, firewall and IPS/IDS configuration, adversarial attack simulation, and centralized log monitoring with a SIEM.
 
